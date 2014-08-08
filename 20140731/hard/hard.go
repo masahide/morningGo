@@ -21,14 +21,16 @@ func main() {
 				if !ip.IP.IsLoopback() {
 					pretty.Printf("%s:%s\n", i.Name, ip)
 				}
+			case *net.IPAddr:
+				if !ip.IP.IsLoopback() {
+					pretty.Printf("%s:%s\n", i.Name, ip)
+				}
 				/*
-					// Windowsはこうかな？とおもったけど 違うみたいコンパイルエラーに
-					// impossible type switch case: ip (type net.Addr) cannot have dynamic type *net.IP (missing Network method)
-					case *net.IP:
-
-					if !ip.IsLoopback() {
-						pretty.Printf("%s:%s\n", i.Name, ip)
-					}
+					//↓の書き方はコンパイルエラーに
+					case *net.IPNet, *net.IPAddr:
+						if !ip.IP.IsLoopback() {  // > ip.IP undefined (type net.Addr has no field or method IP)
+							pretty.Printf("%s:%s\n", i.Name, ip)
+						}
 				*/
 			}
 		}
